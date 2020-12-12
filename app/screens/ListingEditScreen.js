@@ -1,18 +1,21 @@
 import * as Yup from 'yup'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
+import * as Location from 'expo-location'
 import Screen from '../components/Screen'
 import AppForm from '../components/forms/Form';
 import FormField from '../components/forms/FormField';
 import FormPicker from '../components/forms/FormPicker';
 import SubmitButton from '../components/forms/SubmitButton';
 import CategoryPickerItem from '../components/CategoryPickerItem';
+import FormImagePicker from '../components/forms/FormImagePicker';
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).label('Title'),
   price: Yup.number().required().min(1).max(10000).label('Price'),
   description: Yup.string().label('Description'),
   category: Yup.object().required().nullable().label('Category'),
+  images: Yup.array().min(1, "Please select at least one image")
 })
 
 const categories = [
@@ -21,7 +24,18 @@ const categories = [
   { label: "Camera", value: 3, backgroundColor: 'green', icon: 'basketball' },
 ]
 export default function ListingEditScreen() {
-  return (
+  const [location, setLocation] = useState()
+  const getLocation = async () => {
+    const { granted } = await Location.requestPermissionsAsync()
+    if (!granted) return
+    const { coords: { latitude, longitude },} = await Location.getLastKnownPositionAsync()
+
+    setLocation({ latitude, longitude})
+  }
+  useEffect(() => {
+    getLocation()
+  }, [])
+    return (
     <Screen>
       <AppForm
         initialValues={{
@@ -29,11 +43,13 @@ export default function ListingEditScreen() {
           price: "",
           description: "",
           category: null,
+          images: []
         }}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={(values) => console.log(location)}
         validationSchema={validationSchema}
       >
-        <FormField maxLength={255} name="title" placeholder="Title" />
+        <FormImagePicker name='images'  />
+        <FormField maxLength={255} name="tiftle" placeholder="Title" />
         <FormField
           keyboardType="numeric"
           maxLength={8}
