@@ -5,7 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 export default function Icon({
   name,
   size = 40,
-  backgroundColor = "black",
+  backgroundColor,
   iconColor = 'white'
 }) {
   return (
