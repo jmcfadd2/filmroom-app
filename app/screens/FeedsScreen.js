@@ -19,7 +19,7 @@ export default function FeedsScreen({ navigation }) {
         data={posts}
         keyExtractor={post => post.postId}
         renderItem={({item}) =>
-        <Card
+        <PostCard
           post={item}
           session={item.session}
           onPress={() => navigation.navigate(routes.POST_DETAILS, item)}

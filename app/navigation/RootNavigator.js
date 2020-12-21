@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import AppNavigator from './AppNavigator';
 import AuthNavigator from './AuthNavigator';
 import { useSelector, useDispatch } from 'react-redux';
+import LearnNavigator from './LearnNavigator';
 
 
 const RootNavigator = () => {
@@ -10,6 +11,7 @@ const RootNavigator = () => {
 
   return (
   <NavigationContainer>
+      {/* <LearnNavigator /> */}
     {!authenticated ? <AuthNavigator /> : <AppNavigator />}
   </NavigationContainer>
 )}

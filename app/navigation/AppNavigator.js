@@ -3,9 +3,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AccountScreens from '../screens/AccountScreen';
 import ListingEditScreen from '../screens/CreatePostScreen';
 import FeedsScreen from '../screens/FeedsScreen';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, Foundation } from '@expo/vector-icons';
 import FeedNavigator from './FeedNavigator';
 import routes from './routes';
+import LearnNavigator from './LearnNavigator';
 
 
 const Tab = createBottomTabNavigator()
@@ -17,16 +18,16 @@ const AppNavigator = () => (
       component={FeedNavigator}
       options={{
         tabBarIcon: ({ color, size }) => (
-          <MaterialCommunityIcons name="home" color={color} size={size} />
+          <MaterialCommunityIcons name="home" color={color} size={35} />
         )
       }}
     />
     <Tab.Screen
-      name="ListingEdit"
-      component={ListingEditScreen}
+      name={routes.LEARN}
+      component={LearnNavigator}
       options={{
         tabBarIcon: ({ color, size }) => (
-          <MaterialCommunityIcons name="plus-circle" color={color} size={size} />
+          <Foundation name="play-video" size={35} color={color} />
         )
       }}
     />
@@ -35,7 +36,7 @@ const AppNavigator = () => (
       component={AccountScreens}
       options={{
         tabBarIcon: ({ color, size }) => (
-          <MaterialCommunityIcons name="account" color={color} size={size} />
+          <MaterialCommunityIcons name="account" color={color} size={35} />
         )
       }}
     />
