@@ -9,7 +9,9 @@ import CourseDetailsScreen from '../screens/CourseDetailsScreen';
 const Stack = createStackNavigator()
 
 const LearnNavigator = () => (
-  <Stack.Navigator>
+  <Stack.Navigator screenOptions={{
+    headerShown: false
+  }}>
     <Stack.Screen name={routes.LEARN} component={LearnScreen} />
     <Stack.Screen name={routes.COURSE_DETAILS} component={CourseDetailsScreen} />
   </Stack.Navigator>

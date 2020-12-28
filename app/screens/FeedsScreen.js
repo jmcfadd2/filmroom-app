@@ -5,6 +5,7 @@ import { getPosts } from '../redux/actions/dataActions';
 import PostCard from '../components/PostCard'
 import Screen from '../components/Screen'
 import routes from '../navigation/routes'
+import colors from '../config/colors';
 
 
 export default function FeedsScreen({ navigation }) {
@@ -32,7 +33,8 @@ export default function FeedsScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   screen: {
-    padding: 20,
-    backgroundColor: 'lightgrey'
+    paddingHorizontal: 15
+    
   }
+
 })

@@ -7,7 +7,7 @@ import AppText from './Text'
 import PickerItem from './PickerItem'
 import Screen from './Screen'
 
-export default function AppPicker({ icon, items, onSelectedItem, selectedItem, numberOfColumns, PickerItemComponent = PickerItem, placeholder, width = '100%' }) {
+export default function AppPicker({ icon, items, name, onSelectedItem, selectedItem, numberOfColumns, PickerItemComponent = PickerItem, placeholder, width = '100%' }) {
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <>
@@ -17,7 +17,7 @@ export default function AppPicker({ icon, items, onSelectedItem, selectedItem, n
           {console.log(selectedItem)}
 
           {selectedItem ? (
-            <AppText style={styles.text}>{selectedItem.label}</AppText>
+            <AppText style={styles.text}>{selectedItem}</AppText>
           ) : (
               <AppText style={styles.placeholder}>{placeholder}</AppText>)}
 
@@ -36,14 +36,16 @@ export default function AppPicker({ icon, items, onSelectedItem, selectedItem, n
           <FlatList
             data={items}
             numColumns={numberOfColumns}
-            keyExtractor={item => item.value.toString()}
-            renderItem={({ item }) => (
+            keyExtractor={(item, i) => i}
+            renderItem={({ item, index }) => (
               <PickerItemComponent
                 item={item}
-                label={item.label}
+                
+                index={index}
+                label={item}
                 onPress={() => {
                   setModalVisible(false)
-                  onSelectedItem(item)
+                  onSelectedItem(item[name] ? item[name] : item, index)
                 }}
               />
             )}

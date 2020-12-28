@@ -1,3 +1,4 @@
+import colors from "./colors";
 
 
 export default {
@@ -8,7 +9,7 @@ export default {
   },
   screen: {
     padding: 20,
-    backgroundColor: 'lightgrey'
+    backgroundColor: colors.secondary
   },
   avatar: {
     width: 50,

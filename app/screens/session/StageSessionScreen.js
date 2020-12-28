@@ -2,13 +2,13 @@ import * as Yup from 'yup'
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import * as Location from 'expo-location'
-import Screen from '../components/Screen'
-import AppForm from '../components/forms/Form';
-import FormField from '../components/forms/FormField';
-import FormPicker from '../components/forms/FormPicker';
-import SubmitButton from '../components/forms/SubmitButton';
-import CategoryPickerItem from '../components/CategoryPickerItem';
-import FormImagePicker from '../components/forms/FormImagePicker';
+import Screen from '../../components/Screen'
+import AppForm from '../../components/forms/Form';
+import FormField from '../../components/forms/FormField';
+import FormPicker from '../../components/forms/FormPicker';
+import SubmitButton from '../../components/forms/SubmitButton';
+import CategoryPickerItem from '../../components/CategoryPickerItem';
+import FormImagePicker from '../../components/forms/FormImagePicker';
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).label('Title'),
@@ -24,9 +24,9 @@ const categories = [
   { label: "Camera", value: 3, backgroundColor: 'green', icon: 'basketball' },
 ]
 export default function ListingEditScreen() {
-  
-  
-    return (
+
+
+  return (
     <Screen>
       <AppForm
         initialValues={{
@@ -39,8 +39,8 @@ export default function ListingEditScreen() {
         onSubmit={(values) => console.log(location)}
         validationSchema={validationSchema}
       >
-        <FormImagePicker name='images'  />
-        <FormField maxLength={255} name="title" placeholder="Title" />
+        <FormImagePicker name='images' />
+        <FormField maxLength={255} name="tiftle" placeholder="Title" />
         <FormField
           keyboardType="numeric"
           maxLength={8}

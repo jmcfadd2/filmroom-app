@@ -25,7 +25,7 @@ export default function LoginScreen() {
     <Screen style={styles.container}>
       <Image
         style={styles.logo}
-        source={require('../assets/reppit-text-logo.png')}
+        source={require('../assets/filmroom-text-logo.png')}
       />
 
       <Form

@@ -10,8 +10,8 @@ function WelcomeScreen({ navigation }) {
       style={styles.background}
       source={require('../assets/park-ball.jpg')}>
       <View style={styles.logoContainer}>
-      <Image style={styles.logo} source={require('../assets/reppit-text-logo.png')} />
-      <Text style={styles.tagline}>Watch It. Learn It. Reppit.</Text>
+      <Image style={styles.logo} source={require('../assets/filmroom-text-logo.png')} />
+      
       </View>
       <View style={styles.buttonContainer}>
         <AppButton title="Login" onPress={() => navigation.navigate('Login')}/>

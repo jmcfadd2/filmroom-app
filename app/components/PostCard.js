@@ -7,6 +7,7 @@ import { FlatList } from 'react-native-gesture-handler'
 import AppText from './Text'
 import Text from './Text'
 import Icon from './Icon';
+import colors from '../config/colors';
 
 export default function Card({ post, style, onPress }) {
   const { session } = post
@@ -100,9 +101,17 @@ export default function Card({ post, style, onPress }) {
 const styles = StyleSheet.create({
   card: {
     borderRadius: 15,
-    backgroundColor: 'white',
-    overflow: "hidden",
-    marginVertical: 20
+    backgroundColor: colors.primary,
+    marginVertical: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 7.49,
+
+    elevation: 3,
   },
   banner: {
     height: '20%',

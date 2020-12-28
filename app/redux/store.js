@@ -4,6 +4,7 @@ import thunk from 'redux-thunk'
 import userReducer from './reducers/userReducer'
 import dataReducer from './reducers/dataReducer'
 import courseReducer from './reducers/courseReducer'
+import sessionReducer from './reducers/sessionReducer'
 
 
 
@@ -15,6 +16,8 @@ const reducers = combineReducers({
   user: userReducer,
   data: dataReducer,
   courses: courseReducer,
+  session: sessionReducer,
+
 })
 
 const composeEnhancers =

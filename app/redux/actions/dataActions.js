@@ -10,16 +10,6 @@ import {
   LOADING_UI,
   SET_POST,
   STOP_LOADING_UI,
-  GET_TOPICS,
-  SET_TOPIC,
-  SET_TYPE,
-  SET_SESSION,
-  ADD_NEW_DRILL,
-  SET_DRILLS,
-  ADD_DRILL,
-  UPDATE_RESULTS,
-  SET_TITLE,
-  SET_DESCRIPT,
   SUBMIT_COMMENT,
   SET_PROGRESS,
   SET_VID_STATUS
@@ -46,6 +36,26 @@ export const getPosts = () => (dispatch) => {
       dispatch({
         type: SET_POSTS,
         payload: []
+      });
+    });
+};
+
+export const getUserData = (userHandle) => (dispatch) => {
+  dispatch({
+    type: LOADING_DATA
+  });
+  axios
+    .get(`/user/${userHandle}`)
+    .then((res) => {
+      dispatch({
+        type: SET_POSTS,
+        payload: res.data.posts
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: SET_POSTS,
+        payload: null
       });
     });
 };

@@ -3,6 +3,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import AppText from './Text'
 import defaultStyles from '../config/styles';
 import { Entypo } from '@expo/vector-icons';
+import colors from '../config/colors';
 
 export default function CourseCard({ course, style, onPress }) {
 
@@ -45,7 +46,7 @@ export default function CourseCard({ course, style, onPress }) {
 const styles = StyleSheet.create({
   courseCard: {
     borderRadius: 15,
-    backgroundColor: 'white',
+    backgroundColor: colors.primary,
     overflow: "hidden",
     marginVertical: 20
   },
@@ -64,18 +65,18 @@ const styles = StyleSheet.create({
 
   },
   name: {
-    color: 'black',
+    color: colors.white,
     fontWeight: 'bold',
   },
   nametag: {
     width: '75%'
   },
   subtitle: {
-    color: 'black',
+    color: colors.white,
     fontSize: 14,
   },
   description: {
-    color: 'black',
+    color: colors.white,
     fontWeight: 'bold',
     fontSize: 22,
     alignSelf: 'center',

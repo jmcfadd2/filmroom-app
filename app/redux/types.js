@@ -24,6 +24,18 @@ export const UNLIKE_POST = 'UNLIKE_POST';
 export const DELETE_POST = 'DELETE_POST';
 export const CREATE_POST = 'CREATE_POST';
 export const SUBMIT_COMMENT = 'SUBMIT_COMMENT';
+
+// Course Reducer
+export const SET_COURSES = 'SET_COURSES'
+export const SET_COURSE_INFO = 'SET_COURSE_INFO'
+export const LOADING_COURSES = 'LOADING_COURSES'
+export const SET_COURSE_TOPIC = 'SET_COURSE_TOPIC'
+export const SET_COURSE_DRILLS = 'SET_COURSE_DRILLS'
+export const SET_COURSE_ID = 'SET_COURSE_ID'
+export const SET_UPLOAD_SUCCESS = 'SET_UPLOAD_SUCCESS'
+
+// Session Reducer
+export const LOADING_SESSION = 'LOADING_SESSION'
 export const GET_TOPICS = 'GET_TOPICS'
 export const ADD_NEW_DRILL = 'ADD_NEW_DRILL';
 export const ADD_DRILL = 'ADD_DRILL';
@@ -35,12 +47,3 @@ export const SET_SESSION = 'SET_SESSION';
 export const SET_TITLE = 'SET_TITLE';
 export const SET_DESCRIPT = 'SET_DESCRIPT';
 export const CREATE_SESSION_POST = 'CREATE_SESSION_POST';
-// Course Reducer
-export const SET_COURSES = 'SET_COURSES'
-export const SET_COURSE_INFO = 'SET_COURSE_INFO'
-export const LOADING_COURSES = 'LOADING_COURSES'
-export const SET_COURSE_TOPIC = 'SET_COURSE_TOPIC'
-export const SET_COURSE_DRILLS = 'SET_COURSE_DRILLS'
-export const SET_COURSE_ID = 'SET_COURSE_ID'
-export const SET_UPLOAD_SUCCESS = 'SET_UPLOAD_SUCCESS'
-

@@ -8,7 +8,9 @@ import routes from './routes';
 const Stack = createStackNavigator()
 
 const AuthNavigator = () => (
-  <Stack.Navigator>
+  <Stack.Navigator screenOptions={{
+    headerShown: false
+  }}>
     <Stack.Screen name={routes.WELCOME} component={WelcomeScreen} />
     <Stack.Screen name={routes.LOGIN} component={LoginScreen} />
   </Stack.Navigator>

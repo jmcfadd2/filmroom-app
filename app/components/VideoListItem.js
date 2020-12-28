@@ -8,7 +8,7 @@ export default function VideoListItem({ title, onPress }) {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
-        <Icon name="play-circle" size={60}  />
+        <Icon name="play-circle" size={60} />
         <Text>{title}</Text>
       </View>
     </TouchableOpacity>

@@ -8,17 +8,20 @@ import {
   MARK_NOTIFICATIONS_READ
 } from '../types';
 import axios from 'axios';
+import { firebase } from '../../config/firebase'
+
 
 export const loginUser = (userData) => (dispatch) => {
   dispatch({
     type: LOADING_UI
   })
-  console.log(userData)
+  
   axios.post('/login', userData)
     .then((res) => {
       setAuthorizationHeader(res.data.token)
       dispatch(getUserData())
       dispatch({ type: CLEAR_ERRORS })
+      firebase.default.auth().signInWithEmailAndPassword(userData.email,userData.password)
       console.log(res.data.token);
       
     })

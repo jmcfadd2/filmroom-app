@@ -21,10 +21,7 @@ import {
 const initialState = {
   posts: [],
   post: {},
-  session: {
-    drills: [],
-    drillResults: []
-  },
+  
   topics: [],
   yourDrills: [],
   loading: false
@@ -83,74 +80,74 @@ export default function (state = initialState, action) {
           comments: [action.payload, ...state.post.comments]
         }
       };
-    case GET_TOPICS:
-      return {
-        ...state,
-        topics: action.payload,
-        loading: false
-      }
-    case SET_TOPIC:
-      return {
-        ...state,
-        session: {
-          ...state.session,
-          topic: action.payload
+    // case GET_TOPICS:
+    //   return {
+    //     ...state,
+    //     topics: action.payload,
+    //     loading: false
+    //   }
+    // case SET_TOPIC:
+    //   return {
+    //     ...state,
+    //     session: {
+    //       ...state.session,
+    //       topic: action.payload
 
-        }
-      };
-    case SET_TYPE:
-      return {
-        ...state,
-        session: {
-          ...state.session,
-          type: action.payload
+    //     }
+    //   };
+    // case SET_TYPE:
+    //   return {
+    //     ...state,
+    //     session: {
+    //       ...state.session,
+    //       type: action.payload
 
-        }
-      };
-    case ADD_NEW_DRILL:
-      return {
-        ...state,
-        session: {
-          ...state.session,
-          drills: [...state.session.drills, action.payload]
-        },
-        loading: false
-      }
+    //     }
+    //   };
+    // case ADD_NEW_DRILL:
+    //   return {
+    //     ...state,
+    //     session: {
+    //       ...state.session,
+    //       drills: [...state.session.drills, action.payload]
+    //     },
+    //     loading: false
+    //   }
 
-    case SET_DRILLS:
-      return {
-        ...state,
-        yourDrills: action.payload,
+    // case SET_DRILLS:
+    //   return {
+    //     ...state,
+    //     yourDrills: action.payload,
 
-      };
-    case ADD_DRILL:
-      let drillIndex = state.yourDrills.findIndex(
-        (drill) => drill.name === action.payload
+    //   };
+    // case ADD_DRILL:
+    //   let drillIndex = state.yourDrills.findIndex(
+    //     (drill) => drill.name === action.payload
 
-      );
+    //   );
 
-      return {
-        ...state,
-        session: {
-          ...state.session,
-          drills: [...state.session.drills, state.yourDrills[drillIndex]]
-        }
-      }
-    case UPDATE_RESULTS:
-      return {
-        ...state,
-        session: {
-          ...state.session,
-          drillResults: [...state.session.drillResults, action.payload]
-        },
-        loading: false
-      };
-    case SET_SESSION:
-      return {
-        ...state,
-        session: action.payload,
-        loading: false
-      };
+    //   return {
+    //     ...state,
+    //     session: {
+    //       ...state.session,
+    //       drills: [...state.session.drills, state.yourDrills[drillIndex]]
+    //     }
+    //   }
+    // case UPDATE_RESULTS:
+    //   return {
+    //     ...state,
+    //     session: {
+    //       ...state.session,
+    //       drillResults: [...state.session.drillResults, action.payload]
+    //     },
+    //     loading: false
+    //   };
+    // case SET_SESSION:
+    //   return {
+    //     ...state,
+    //     session: action.payload,
+    //     loading: false
+    //   };
     default:
       return state;
   }
