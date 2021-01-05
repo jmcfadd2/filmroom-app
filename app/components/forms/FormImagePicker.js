@@ -23,6 +23,7 @@ export default function FormImagePicker({ name }) {
         imageUris={imageUris}
         onAddImage={handleAdd}
         onRemoveImage={handleRemove}
+        type={name}
       />
       <ErrorMessage error={errors[name]} visible={touched[name]} />
     </>

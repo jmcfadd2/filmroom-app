@@ -1,4 +1,3 @@
-import { Formik } from 'formik'
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux';
@@ -18,6 +17,7 @@ const validationSchema = Yup.object().shape({
 export default function LoginScreen() {
   const dispatch = useDispatch()
   const authenticated = useSelector(state => state.user.authenticated)
+  const loginLoading = useSelector(state => state.ui.loading)
   const handleSubmit = (values) => {
     dispatch(loginUser(values))
   }
@@ -51,7 +51,7 @@ export default function LoginScreen() {
           secureTextEntry
           textContentType='password'
         />
-        <SubmitButton title="Login" />
+        <SubmitButton title="Login" loading={loginLoading} />
       </Form>
 
 

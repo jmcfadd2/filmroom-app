@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux';
 import { getPosts } from '../redux/actions/dataActions';
 import PostCard from '../components/PostCard'
@@ -14,10 +14,19 @@ export default function FeedsScreen({ navigation }) {
     dispatch(getPosts())
   }, [])
   const posts = useSelector(state => state.data.posts)
+  const loading = useSelector(state => state.data.loading)
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const onRefresh = () => {
+    setIsRefreshing(true)
+    dispatch(getPosts())
+    !loading && setIsRefreshing(false)
+  }
   return (
     <Screen style={styles.screen}>
-      <FlatList
+      {!loading ? (<FlatList
         data={posts}
+        onRefresh={onRefresh}
+        refreshing={isRefreshing}
         keyExtractor={post => post.postId}
         renderItem={({item}) =>
         <PostCard
@@ -26,7 +35,9 @@ export default function FeedsScreen({ navigation }) {
           onPress={() => navigation.navigate(routes.POST_DETAILS, item)}
         />
       }
-      />
+      />) : (
+        <ActivityIndicator style={styles.indicator}  size='large' />
+      )}
     </Screen>
   )
 }
@@ -34,7 +45,9 @@ export default function FeedsScreen({ navigation }) {
 const styles = StyleSheet.create({
   screen: {
     paddingHorizontal: 15
-    
+  },
+  indicator: {
+    marginTop: 300
   }
 
 })

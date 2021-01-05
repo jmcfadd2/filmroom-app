@@ -7,6 +7,7 @@ import defaultStyles from '../config/styles';
 import { Entypo } from '@expo/vector-icons';
 import AppButton from '../components/Button';
 import VideoListItem from '../components/VideoListItem';
+import colors from '../config/colors';
 
 
 export default function CourseDetailsScreen({ navigation, route }) {
@@ -36,9 +37,9 @@ export default function CourseDetailsScreen({ navigation, route }) {
           <FlatList
             data={course.videos}
             keyExtractor={(item, i) => i.toString()}
-            renderItem={({item}) => (
+            renderItem={({item, index}) => (
               <VideoListItem
-                title={`${course.title} video `}
+                title={`${course.videoTitles[index]} video `}
                 onPress={() => setActiveVideo(item)}
               />
             )}
@@ -54,7 +55,7 @@ export default function CourseDetailsScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   detailsContainer: {
     height: '100%',
-    backgroundColor: 'lightgrey',
+    backgroundColor: colors.primary,
 
   },
   header: {

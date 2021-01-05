@@ -27,18 +27,18 @@ export default function Card({ post, style, onPress }) {
 
       <View style={styles.detailsContainer}>
         <Text style={styles.title}>{post.title}</Text>
-        <Text style={styles.subtitle}>This is the body description of what k</Text>
+        <Text style={styles.subtitle}>{post.body}</Text>
       </View>
       <View style={styles.sessionContainer}>
         <AppText style={styles.topic}>{session.topic} Session</AppText>
         {session &&
           session.drillResults.map((result, index) => (
             <View style={styles.drill} key={index}>
-              <AppText>{result.drillName}</AppText>
+              <AppText color={colors.white}>{result.drillName}</AppText>
               {!result.results.compoundMetric ?
                 result.results.map((metric, index) => (
                   <View key={index}>
-                    <AppText>{metric}</AppText>
+                    <AppText color={colors.white}>{metric}</AppText>
                   </View>
                 )) : (
                   <View style={styles.compoundMetric}>
@@ -121,6 +121,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
 
   },
+  
   image: {
     width: 50,
     height: 50,
@@ -135,13 +136,13 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   subtitle: {
-    color: 'grey',
+    color: colors.white,
 
   },
   title: {
     marginBottom: 7,
     fontWeight: 'bold',
-    color: 'black'
+    color: colors.white
   },
   topic: {
     fontWeight: 'bold'

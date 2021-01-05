@@ -4,13 +4,14 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import defaultStyles from '../config/styles'
 
-export default function AppTextInput({ icon, width = '100%', ...otherProps}) {
+export default function AppTextInput({ icon, width = '100%', fontSize = 18, style, ...otherProps}) {
   return (
-    <View style={[styles.container, {width}]}>
+    <View style={[styles.container, {width}, style]}>
       {icon && <MaterialCommunityIcons name={icon} size={20} color='grey' style={styles.icon} />}
       <TextInput 
       placeholderTextColor= 'grey'
-      style={defaultStyles.text, styles.textInput} {...otherProps}/>
+      allowFontScaling={false}
+      style={[defaultStyles.text, styles.textInput, {fontSize}]} {...otherProps}/>
     </View>
   )
 }

@@ -2,9 +2,8 @@ import React, { useEffect } from 'react'
 import { Alert, Image, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import * as ImagePicker from 'expo-image-picker'
-import { Video } from 'expo-av'
 
-export default function ImageInput({ imageUri, onChangeImage, type }) {
+export default function VideoInput({ videoUri, onChangeVideo }) {
 
   useEffect(() => {
     requestPermission()
@@ -16,38 +15,29 @@ export default function ImageInput({ imageUri, onChangeImage, type }) {
   }
 
   const handlePress = () => {
-    if (!imageUri) selectImage()
-    else Alert.alert('Delete', 'Are you sure you want to delete this image?',
-      [{ text: 'Yes', onPress: () => onChangeImage(null) },
+    if (!videoUri) selectVideo()
+    else Alert.alert('Delete', 'Are you sure you want to delete this Video?',
+      [{ text: 'Yes', onPress: () => onChangeVideo(null) },
       { text: 'No' },
       ])
   }
-  const selectImage = async () => {
+
+  const selectVideo = async () => {
     try {
-      
       const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: type == 'images' ? ImagePicker.MediaTypeOptions.Images : ImagePicker.MediaTypeOptions.Videos,
+        mediaTypes: ImagePicker.MediaTypeOptions.Videos,
         quality: 0.5
       })
-      if (!result.cancelled) {onChangeImage(result.uri) 
-      }
+      if (!result.cancelled) onChangeVideo(result.uri)
     } catch (error) {
-      console.log("Error reading image")
+      console.log("Error reading video")
     }
   }
   return (
     <TouchableWithoutFeedback onPress={handlePress}>
       <View style={styles.container}>
-        {!imageUri && <MaterialCommunityIcons name={type == 'images' ? "camera" : 'video'} color='grey' size={50} />}
-        {imageUri && type == 'images' ?  
-        <Image source={{ uri: imageUri }} style={styles.image} /> :
-        <Video 
-          source={{ uri: imageUri }}
-          style={imageUri && styles.image}
-          useNativeControls
-          
-        />
-      }
+        {!videoUri && <MaterialCommunityIcons name="video" color='grey' size={50} />}
+        {videoUri && <Image source={{ uri: videoUri }} style={styles.image} />}
       </View>
     </TouchableWithoutFeedback>
   )
@@ -58,7 +48,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'lightgrey',
     borderRadius: 15,
-    marginVertical: 10,
     overflow: 'hidden',
     height: 100,
     justifyContent: 'center',

@@ -1,61 +1,60 @@
 import * as Yup from 'yup'
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import * as Location from 'expo-location'
+import { Button, StyleSheet, Text, View } from 'react-native'
 import Screen from '../../components/Screen'
-import AppForm from '../../components/forms/Form';
+import Form from '../../components/forms/Form';
 import FormField from '../../components/forms/FormField';
-import FormPicker from '../../components/forms/FormPicker';
 import SubmitButton from '../../components/forms/SubmitButton';
 import CategoryPickerItem from '../../components/CategoryPickerItem';
 import FormImagePicker from '../../components/forms/FormImagePicker';
+import { useDispatch, useSelector } from 'react-redux'
+import { postSession } from '../../redux/actions/sessionActions'
+import routes from '../../navigation/routes'
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).label('Title'),
-  price: Yup.number().required().min(1).max(10000).label('Price'),
   description: Yup.string().label('Description'),
-  category: Yup.object().required().nullable().label('Category'),
   images: Yup.array().min(1, "Please select at least one image")
 })
 
-const categories = [
-  { label: "Furniture", value: 1, backgroundColor: 'red', icon: 'apps' },
-  { label: "Clothing", value: 2, backgroundColor: 'blue', icon: 'email' },
-  { label: "Camera", value: 3, backgroundColor: 'green', icon: 'basketball' },
-]
-export default function ListingEditScreen() {
+export default function ListingEditScreen({ navigation }) {
+  const dispatch = useDispatch()
+  const session = useSelector(state => state.session)
+  const userImage = useSelector(state => state.user.credentials.imageUrl)
 
+  const handleSessionPost = (values) => {
+    const sessionPost = {
+      title: values.title,
+      description: values.title,
+      userImage: userImage,
+      videoCount: values.videos.length,
+      session: {
+        drills: session.drills,
+        drillResults: session.drillResults,
+        topic: session.topic,
+        type: session.type,
+        sessionId: session.sessionId
+      }
+    }
 
+    dispatch(postSession(session.sessionId, sessionPost, values.videos, values.images))
+  }
   return (
     <Screen>
-      <AppForm
+      <Form
         initialValues={{
           title: "",
-          price: "",
           description: "",
-          category: null,
-          images: []
+          images: [],
+          videos: [],
         }}
-        onSubmit={(values) => console.log(location)}
+        onSubmit={handleSessionPost}
         validationSchema={validationSchema}
       >
-        <FormImagePicker name='images' />
-        <FormField maxLength={255} name="tiftle" placeholder="Title" />
-        <FormField
-          keyboardType="numeric"
-          maxLength={8}
-          name="price"
-          width={120}
-          placeholder="Price"
-        />
-        <FormPicker
-          items={categories}
-          name="category"
-          PickerItemComponent={CategoryPickerItem}
-          numberOfColumns={3}
-          placeholder="Category"
-          width='50%'
-        />
+
+        <FormField maxLength={255} name="title" placeholder="Title" />
+
+
         <FormField
           maxLength={255}
           multiline
@@ -63,11 +62,16 @@ export default function ListingEditScreen() {
           numberOfLines={3}
           placeholder={"Description"}
         />
+        <FormImagePicker name='images' />
+        <FormImagePicker name='videos' />
         <SubmitButton title="Post" />
-      </AppForm>
+        <Button title='justin' onPress={() => navigation.navigate(routes.SESSION)} />
+      </Form>
 
     </Screen>
   )
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+
+})

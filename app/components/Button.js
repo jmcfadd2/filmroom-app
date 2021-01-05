@@ -1,13 +1,18 @@
 import React from 'react'
-import { Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native'
 import colors from '../config/colors';
 
 
-export default function AppButton({ title, onPress, color= colors.accent }) {
+export default function AppButton({ title, onPress, color= colors.accent, style, loading }) {
   return (
-    <TouchableOpacity TouchableOpacity style={[styles.button, { backgroundColor: color}]} onPress={onPress}>
+    <TouchableOpacity TouchableOpacity style={[styles.button, { backgroundColor: color}, style]} onPress={onPress}>
         
-        <Text style={styles.text}>{title}</Text>
+        {!loading ? (
+          <Text style={styles.text}>{title}</Text>
+        ) : (
+          <ActivityIndicator size='large'/>
+        )
+      }
       
     </TouchableOpacity>
   )

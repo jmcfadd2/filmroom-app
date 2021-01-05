@@ -40,14 +40,15 @@ export default function SessionScreen({ navigation }) {
     dispatch(setType(typeName))
     setSelectedType(typeName)
   };
-  const handleStart = async (e) => {
-
-    await dispatch(setSession(session))
-    setSessionCreated(true)
+  const handleStart = async () => {
+    await dispatch(setSession({
+      drills: session.drills,
+      topic: session.topic,
+      type: session.type
+    }))
+    navigation.navigate(routes.SESSION_STEP)
   };
-  const handleStage = (e) => {
-    setSessionStaged(true)
-  };
+  
 
   return (
     <Screen>
@@ -104,7 +105,7 @@ export default function SessionScreen({ navigation }) {
         <AppButton
           title='Start session'
           style={styles.AppButton}
-          onPress={() => navigation.navigate(routes.SESSION_STEP)}
+          onPress={handleStart}
         />
       }
 

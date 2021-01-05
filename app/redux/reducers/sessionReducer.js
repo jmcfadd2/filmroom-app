@@ -68,16 +68,13 @@ export default function (state = initialState, action) {
     case UPDATE_RESULTS:
       return {
         ...state,
-        session: {
-          ...state.session,
-          drillResults: [...state.session.drillResults, action.payload]
-        },
+          drillResults: [...state.drillResults, action.payload],
         loading: false
       };
     case SET_SESSION:
       return {
         ...state,
-        session: action.payload,
+      sessionId: action.payload.sessionId,
         loading: false
       };
     default:

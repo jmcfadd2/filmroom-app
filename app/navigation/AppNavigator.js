@@ -25,8 +25,11 @@ const AppNavigator = () => (
     activeBackgroundColor: colors.secondary,
     inactiveTintColor: 'grey',
     inactiveBackgroundColor: colors.secondary,
+    
     style: {
-      borderTopWidth: 0
+      backgroundColor: colors.secondary,
+      borderTopWidth: 0,
+      
     }
   }}>
     <Tab.Screen

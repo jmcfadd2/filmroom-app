@@ -23,7 +23,6 @@ export default function LearnScreen({ navigation }) {
             <CourseCard 
             course={item} 
               onPress={() => navigation.navigate(routes.COURSE_DETAILS, item)}
-
             />
           )}
           

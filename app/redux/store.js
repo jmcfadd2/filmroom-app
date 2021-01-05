@@ -5,6 +5,7 @@ import userReducer from './reducers/userReducer'
 import dataReducer from './reducers/dataReducer'
 import courseReducer from './reducers/courseReducer'
 import sessionReducer from './reducers/sessionReducer'
+import uiReducer from './reducers/uiReducer'
 
 
 
@@ -17,6 +18,8 @@ const reducers = combineReducers({
   data: dataReducer,
   courses: courseReducer,
   session: sessionReducer,
+  ui: uiReducer,
+
 
 })
 

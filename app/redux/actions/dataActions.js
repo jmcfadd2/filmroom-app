@@ -59,3 +59,27 @@ export const getUserData = (userHandle) => (dispatch) => {
       });
     });
 };
+
+export const likePost = (postId) => (dispatch) => {
+  axios
+    .get(`/post/${postId}/like`)
+    .then((res) => {
+      dispatch({
+        type: LIKE_POST,
+        payload: res.data
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+export const unlikePost = (postId) => (dispatch) => {
+  axios
+    .get(`/post/${postId}/unlike`)
+    .then((res) => {
+      dispatch({
+        type: UNLIKE_POST,
+        payload: res.data
+      });
+    })
+    .catch((err) => console.log(err));
+}
