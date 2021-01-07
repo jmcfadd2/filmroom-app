@@ -12,7 +12,9 @@ import {
   STOP_LOADING_UI,
   SUBMIT_COMMENT,
   SET_PROGRESS,
-  SET_VID_STATUS
+  SET_VID_STATUS,
+  SET_USER_POSTS,
+  LOADING_USER
 } from '../types';
 import axios from 'axios';
 
@@ -42,13 +44,13 @@ export const getPosts = () => (dispatch) => {
 
 export const getUserData = (userHandle) => (dispatch) => {
   dispatch({
-    type: LOADING_DATA
+    type: LOADING_USER
   });
   axios
     .get(`/user/${userHandle}`)
     .then((res) => {
       dispatch({
-        type: SET_POSTS,
+        type: SET_USER_POSTS,
         payload: res.data.posts
       });
     })
@@ -61,6 +63,7 @@ export const getUserData = (userHandle) => (dispatch) => {
 };
 
 export const likePost = (postId) => (dispatch) => {
+  console.log('Action ID: ', postId)
   axios
     .get(`/post/${postId}/like`)
     .then((res) => {
@@ -83,3 +86,16 @@ export const unlikePost = (postId) => (dispatch) => {
     })
     .catch((err) => console.log(err));
 }
+
+export const deletePost = (postId) => (dispatch) => {
+  axios
+    .delete(`/post/${postId}`)
+    .then(() => {
+      dispatch({
+        type: DELETE_POST,
+        payload: postId
+      });
+    })
+    .catch((err) => console.log(err));
+};
+

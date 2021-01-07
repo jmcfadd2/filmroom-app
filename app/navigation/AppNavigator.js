@@ -1,6 +1,6 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import AccountScreens from '../screens/AccountScreen';
+import AccountScreen from '../screens/AccountScreen';
 import ListingEditScreen from '../screens/CreatePostScreen';
 import FeedsScreen from '../screens/FeedsScreen';
 import { MaterialCommunityIcons, Foundation  } from '@expo/vector-icons';
@@ -70,7 +70,7 @@ const AppNavigator = () => (
     />
     <Tab.Screen
       name={routes.ACCOUNT}
-      component={AccountScreens}
+      component={AccountScreen}
       options={{
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons name="account" color={color} size={35} />

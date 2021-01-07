@@ -5,7 +5,8 @@ import {
   LIKE_POST,
   UNLIKE_POST,
   SET_AUTHENTICATED,
-  MARK_NOTIFICATIONS_READ
+  MARK_NOTIFICATIONS_READ,
+  SET_USER_POSTS
 } from '../types';
 
 const initialState = {
@@ -13,7 +14,8 @@ const initialState = {
   loading: false,
   credentials: {},
   likes: [],
-  notifications: []
+  notifications: [],
+  userPosts: []
 }
 
 
@@ -58,6 +60,12 @@ export default function (state = initialState, action) {
       state.notifications.forEach((not) => (not.read = true));
       return {
         ...state
+      };
+    case SET_USER_POSTS:
+      return {
+        ...state,
+        userPosts: action.payload,
+        loading: false
       };
     default:
       return state

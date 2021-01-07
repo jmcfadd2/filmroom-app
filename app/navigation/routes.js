@@ -11,5 +11,7 @@ export default Object.freeze({
   WELCOME: "Welcome",
   SESSION: 'Session',
   SESSION_STEP:'Session Step',
-  SESSION_STAGE: 'Session Stage'
+  SESSION_STAGE: 'Session Stage',
+  VIEW_IMAGE: 'View Image',
+
 })

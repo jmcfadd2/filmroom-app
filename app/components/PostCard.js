@@ -1,19 +1,24 @@
 import { Video } from 'expo-av'
 import React from 'react'
-import { Image, StyleSheet, TouchableWithoutFeedback, View } from 'react-native'
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Image, ImageBackground, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
+import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import dayjs from 'dayjs';
 import { FlatList } from 'react-native-gesture-handler'
 import AppText from './Text'
 import Text from './Text'
 import Icon from './Icon';
 import colors from '../config/colors';
+import LikeButton from './LikeButton';
+import { useSelector } from 'react-redux';
+import routes from '../navigation/routes';
 
-export default function Card({ post, style, onPress }) {
-  const { session } = post
+export default function Card({ post, style, index, cardOnPress, navigation }) {
+  const { session, } = post
   const compMetric = session.drillResults.compoundMetric
-
+  const likeCount = useSelector(state => state.data.posts[index].likeCount)
+  const commentCount = useSelector(state => state.data.posts[index].commentCount)
   return (
+
 
     <View style={[styles.card, style]}>
 
@@ -43,11 +48,11 @@ export default function Card({ post, style, onPress }) {
                 )) : (
                   <View style={styles.compoundMetric}>
                     <AppText style={styles.firstMetric}>
-                      {result.results.compoundMetric[0]}/{result.results.compoundMetric[1]} 
+                      {result.results.compoundMetric[0]}/{result.results.compoundMetric[1]}
                     </AppText>
                     <AppText>
                       {(result.results.compoundMetric[0] / result.results.compoundMetric[1] * 100).toPrecision(3)}%
-                    </AppText>
+                      </AppText>
                   </View>
                 )}
             </View>
@@ -61,10 +66,19 @@ export default function Card({ post, style, onPress }) {
             data={post.videos}
             keyExtractor={(item, index) => 'key' + index}
             renderItem={({ item }) => (
-              <Image
-                source={{ uri: `https://image.mux.com/${item}/thumbnail.png?width=428&start=3.0864165` }}
-                style={{ width: 100, height: 100 }}
-              />
+              <TouchableOpacity onPress={() => navigation.navigate(routes.VIEW_IMAGE, {video: item})}>
+                <ImageBackground
+                  source={{ uri: `https://image.mux.com/${item}/thumbnail.png?width=428&start=3.0864165` }}
+                  style={styles.videoThumb}
+                >
+                  <FontAwesome
+                    name='play'
+                    color={colors.grey}
+                    size={40}
+                  />
+                </ImageBackground>
+              </TouchableOpacity>
+
             )}
           />}
       </View>
@@ -74,26 +88,41 @@ export default function Card({ post, style, onPress }) {
           data={post.images}
           keyExtractor={(item, index) => 'key' + index}
           renderItem={({ item }) => (
-            <Image
-              source={{ uri: item }}
-              style={{ width: 100, height: 100 }}
-            />
+            <TouchableOpacity onPress={() => navigation.navigate(routes.VIEW_IMAGE, {image: item})}>
+              <Image
+                source={{ uri: item }}
+                style={{ width: 100, height: 100 }}
+              />
+            </TouchableOpacity>
+
           )}
         />
-
       </View>
+      {likeCount || commentCount !== 0 ?
+        <View style={styles.likeBar}>
+          {likeCount !== 0 &&
+            <View style={styles.likeContainer}>
+              <FontAwesome name='thumbs-up' size={20} color={colors.accent} />
+              <AppText>
+                {likeCount} {likeCount === 1 ? 'like' : 'likes'}
+              </AppText>
+            </View>}
+          {commentCount !== 0 &&
+            <View style={styles.commentContainer}>
+              <AppText>{commentCount} {commentCount === 1 ? 'comment' : 'comments'}</AppText>
+            </View>}
+        </View> : null}
       <View style={styles.actionBar}>
-            <View>
-              <MaterialCommunityIcons name='thumb-up' />
-            </View>
-            <View>
-          <MaterialCommunityIcons name='comment' />
-            </View>
-            <View>
-          <MaterialCommunityIcons name='share' />
-            </View>
+        <View style={styles.actionContainer}>
+          <LikeButton postId={post.postId} size={28} />
+
+        </View>
+        <View style={styles.actionContainer}>
+          <MaterialIcons name='chat' size={28} color={colors.accent} />
+        </View>
       </View>
     </View>
+
 
   )
 }
@@ -121,7 +150,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
 
   },
-  
+
   image: {
     width: 50,
     height: 50,
@@ -131,6 +160,13 @@ const styles = StyleSheet.create({
   },
   videos: {
     marginVertical: 10,
+
+  },
+  videoThumb: {
+    width: 100,
+    height: 100,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   detailsContainer: {
     padding: 20,
@@ -162,13 +198,41 @@ const styles = StyleSheet.create({
   firstMetric: {
     marginRight: 8
   },
+  likeBar: {
+    flexDirection: 'row',
+
+    marginTop: 20,
+    borderTopColor: 'grey',
+    borderTopWidth: 1,
+    paddingVertical: 5
+  },
   actionBar: {
     flexDirection: 'row',
     borderTopColor: 'grey',
     borderTopWidth: 1,
-    justifyContent: 'space-evenly',
-    height: 30,
-    alignItems: 'center'
+    height: 50,
+    width: '100%',
+
 
   },
+  actionContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  commentContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'flex-end'
+  },
+  likeContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'flex-start'
+  }
 })

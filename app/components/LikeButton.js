@@ -1,23 +1,42 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
+import { FontAwesome } from '@expo/vector-icons';
+import { useDispatch, useSelector } from 'react-redux'
+import { likePost, unlikePost } from '../redux/actions/dataActions'
+import colors from '../config/colors';
 
-export default function LikeButton() {
+export default function LikeButton({ postId, size }) {
+  const dispatch = useDispatch()
   const likes = useSelector(state => state.user.likes)
 
-  likedPost = () => {
+  let likedPost = () => {
     if (
-      this.props.user.likes &&
-      this.props.user.likes.find(
-        (like) => like.postId === this.props.postId
+      likes &&
+      likes.find(
+        (like) => like.postId === postId
       )
     )
       return true;
     else return false;
   }
+
+
+
   return (
-    <View>
-      <Text></Text>
-    </View>
+
+    (likedPost() ? (
+      <TouchableWithoutFeedback onPress={() => dispatch(unlikePost(postId))}>
+        <FontAwesome name='thumbs-up' size={size} color={colors.accent} />
+      </TouchableWithoutFeedback>
+    ) : (
+        <TouchableWithoutFeedback onPress={() => {
+          dispatch(likePost(postId))
+        }}>
+          <FontAwesome name='thumbs-o-up' size={size} color={colors.accent} />
+        </TouchableWithoutFeedback>
+      )
+    )
+
   )
 }
 

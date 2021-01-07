@@ -28,11 +28,13 @@ export default function FeedsScreen({ navigation }) {
         onRefresh={onRefresh}
         refreshing={isRefreshing}
         keyExtractor={post => post.postId}
-        renderItem={({item}) =>
+        renderItem={({item, index}) =>
         <PostCard
           post={item}
+          index={index}
           session={item.session}
-          onPress={() => navigation.navigate(routes.POST_DETAILS, item)}
+          cardOnPress={() => navigation.navigate(routes.POST_DETAILS, item)}
+          navigation={navigation}
         />
       }
       />) : (

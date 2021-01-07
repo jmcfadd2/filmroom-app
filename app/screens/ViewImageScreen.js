@@ -1,8 +1,11 @@
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import AppText from '../components/Text'
+import { Video } from 'expo-av'
 
-export default function ViewImageScreen() {
+export default function ViewImageScreen({ route }) {
+  
   return (
     <View style={styles.container}>
       <View style={styles.closeIcon}>
@@ -11,10 +14,19 @@ export default function ViewImageScreen() {
       <View style={styles.deleteIcon}>
         <MaterialCommunityIcons name='trash-can-outline' size={35} />
       </View>
-      <Image 
-        resizeMode="contain"
-        source={require('../assets/park-ball.jpg')}
+      {route.params.image !== undefined && 
+      <Image
+        source={{ uri: route.params.image  }}
+        style={{ width: 100, height: 100 }}
+      />}
+      {route.params.video !== undefined && 
+        <Video
+        source={{ uri: `https://stream.mux.com/${route.params.video}.m3u8`}}
+        useNativeControls
+        style={{height: '100%', width: '100%'}}
         />
+      }
+      {console.log(route.params)}
     </View>
   )
 }
@@ -32,6 +44,6 @@ const styles = StyleSheet.create({
   deleteIcon: {
     position: 'absolute',
     top: 40,
-    right
+
   }
 })

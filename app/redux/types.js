@@ -4,6 +4,7 @@ export const SET_UNAUTHENTICATED = 'SET_UNAUTHENTICATED';
 export const SET_USER = 'SET_USER';
 export const LOADING_USER = 'LOADING_USER';
 export const MARK_NOTIFICATIONS_READ = 'MARK_NOTIFICATIONS_READ';
+export const SET_USER_POSTS = 'SET_USER_POSTS';
 
 // UI reducer types
 export const SET_ERRORS = 'SET_ERRORS';
@@ -21,6 +22,7 @@ export const SET_DRILLS = 'SET_DRILLS';
 export const SET_POST = 'SET_POST';
 export const LIKE_POST = 'LIKE_POST';
 export const UNLIKE_POST = 'UNLIKE_POST';
+export const INCREMENT_LIKE = 'INCREMENT_LIKE';
 export const DELETE_POST = 'DELETE_POST';
 export const CREATE_POST = 'CREATE_POST';
 export const SUBMIT_COMMENT = 'SUBMIT_COMMENT';
