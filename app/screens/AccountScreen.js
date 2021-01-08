@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { FlatList, Image, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, FlatList, Image, StyleSheet, Text, View } from 'react-native'
 import { useSelector, useDispatch} from 'react-redux'
 import { getUserData } from '../redux/actions/dataActions';
 import Icon from '../components/Icon'
@@ -24,7 +24,7 @@ export default function AccountScreen({ navigation }) {
     <Screen style={styles.screen}>
       <ProfileDetails user={user} />
       <View style={styles.container}>
-        <FlatList
+        {!loading ? <FlatList
           data={posts}
           keyExtractor={post => post.postId}
           renderItem={({ item, index }) =>
@@ -37,7 +37,7 @@ export default function AccountScreen({ navigation }) {
               navigation={navigation}
             />
           }
-        />
+        /> : <ActivityIndicator size='large' style={styles.indicator} />}
       </View>
 
     </Screen>
@@ -45,6 +45,8 @@ export default function AccountScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  
+  indicator: {
+    marginTop: 300
+  }
   
 })

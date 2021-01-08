@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native'
 import CourseCard from '../components/CourseCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCourses } from '../redux/actions/courseActions';
@@ -13,10 +13,11 @@ export default function LearnScreen({ navigation }) {
     dispatch(getCourses())
   }, [])
   const courses = useSelector(state => state.courses.courses)
+  const loading = useSelector(state => state.courses.loading)
 
   return (
       <Screen style={defaultStyles.screen}>
-        <FlatList 
+        {!loading ? <FlatList 
           data={courses}
           keyExtractor={(course, i) => i.toString()}
           renderItem={({item}) => (
@@ -25,8 +26,7 @@ export default function LearnScreen({ navigation }) {
               onPress={() => navigation.navigate(routes.COURSE_DETAILS, item)}
             />
           )}
-          
-        />
+        /> : <ActivityIndicator size='large' style={styles.indicator} />  }
       </Screen>
 
     
@@ -34,5 +34,7 @@ export default function LearnScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  
+  indicator: {
+    marginTop: 300
+  }
 })

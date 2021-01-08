@@ -2,7 +2,6 @@ import axios from 'axios'
 import {
   SET_COURSE_TOPIC,
   SET_COURSE_DRILLS,
-  LOADING_DATA,
   SET_PROGRESS,
   SET_VID_STATUS,
   SET_COURSE_ID,
@@ -17,7 +16,7 @@ import {
 
 export const getCourses = () => (dispatch) => {
   dispatch({
-    type: LOADING_DATA
+    type: LOADING_COURSES
   });
   axios
     .get('/courses')

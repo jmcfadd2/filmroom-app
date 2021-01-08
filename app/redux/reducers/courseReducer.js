@@ -48,7 +48,8 @@ export default function (state = initialState, action) {
     case SET_COURSE_DRILLS:
       return {
         ...state,
-        drills: [...state.drills, action.payload]
+        drills: [...state.drills, action.payload],
+        loading: false
       }
     case SET_COURSE_ID:
       return {
