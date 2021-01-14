@@ -5,21 +5,25 @@ import AppButton from '../components/Button'
 import AppTextInput from '../components/TextInput'
 import Screen from '../components/Screen'
 import * as Yup from 'yup';
-import { loginUser } from '../redux/actions/userActions';
+import { signupUser } from '../redux/actions/userActions';
 import AppText from '../components/Text'
-import { Form, AppFormField, SubmitButton} from '../components/forms';
+import { Form, AppFormField, SubmitButton } from '../components/forms';
 import routes from '../navigation/routes';
 
 const validationSchema = Yup.object().shape({
+  handle: Yup.string().required().min(4).label('Handle'),
   email: Yup.string().required().email().label("Email"),
-  password: Yup.string().required().min(6).label("Password")
+  password: Yup.string().required().min(6).label("Password"),
+  passwordConfirmation: Yup.string()
+    .oneOf([Yup.ref('password'), null], 'Passwords must match')
 })
 
-export default function LoginScreen({ navigation }) {
+export default function SignUpScreen({ navigation }) {
   const dispatch = useDispatch()
   const loginLoading = useSelector(state => state.ui.loading)
+  const serverErrors = useSelector(state => state.ui.errors)
   const handleSubmit = (values) => {
-    dispatch(loginUser(values))
+    dispatch(signupUser(values))
   }
   return (
     <Screen style={styles.container}>
@@ -29,10 +33,21 @@ export default function LoginScreen({ navigation }) {
       />
 
       <Form
-        initialValues={{ email: '', password: '' }}
+        initialValues={{handle: '', email: '', password: '', confirmPassword: '' }}
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
+        {serverErrors !== undefined && 
+          <AppText>{serverErrors}</AppText>
+        }
+        <AppFormField
+          autoCorrect={false}
+          autoCapitalize="none"
+          icon="account"
+          name="handle"
+          placeholder="Username"
+          
+        />
         <AppFormField
           autoCorrect={false}
           autoCapitalize="none"
@@ -51,10 +66,21 @@ export default function LoginScreen({ navigation }) {
           secureTextEntry
           textContentType='password'
         />
-        <SubmitButton title="Login" loading={loginLoading} />
+        <AppFormField
+          autoCapitalize="none"
+          autoCorrect={false}
+          icon="check"
+          name="confirmPassword"
+          placeholder="Confirm Password"
+          secureTextEntry
+          textContentType='password'
+        />
+        <SubmitButton title="Sign Up" loading={loginLoading} />
       </Form>
 
-      <AppButton title='Sign up here' onPress={() => navigation.navigate(routes.SIGN_UP)} />
+      <AppButton title='Login Here' onPress={() => navigation.navigate(routes.LOGIN)} />
+
+
 
     </Screen>
   )

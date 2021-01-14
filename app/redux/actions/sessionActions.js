@@ -236,11 +236,7 @@ export const postSession =  (sessionId, newSessionPost, videos, images) => (disp
         const blob = await response.blob();
         console.log(blob)
         
-        
-        
-        
 
-        
           fetch(uploadUrl, {
             method: 'put',
             headers: {

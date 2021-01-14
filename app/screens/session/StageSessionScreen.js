@@ -65,7 +65,6 @@ export default function ListingEditScreen({ navigation }) {
         <FormImagePicker name='images' />
         <FormImagePicker name='videos' />
         <SubmitButton title="Post" />
-        <Button title='justin' onPress={() => navigation.navigate(routes.SESSION)} />
       </Form>
 
     </Screen>

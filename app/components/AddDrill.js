@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import colors from '../config/colors'
 import { getUserDrills, addDrillToSession } from '../redux/actions/sessionActions'
+import AppButton from './Button'
+import DrillCard from './DrillCard'
 import Icon from './Icon'
 import Screen from './Screen';
 import AppText from './Text'
@@ -41,9 +43,10 @@ export default function AddDrill({ onPress, items }) {
               style={styles.drills}
               keyExtractor={(item, i) => i}
               renderItem={({ item, index }) => (
-                <View style={styles.drillChip}>
-                  <AppText numberOfLines={1}> {(index + 1).toString()}. {item.name} </AppText>
-                </View>
+                <DrillCard 
+                  key={item.drillId}
+                  drill={item}
+                />
               )}
             />
           </View>
@@ -59,11 +62,15 @@ export default function AddDrill({ onPress, items }) {
                   style={styles.drillChip}
                   onPress={() => dispatch(addDrillToSession(item.name))}
                 >
-                  <AppText numberOfLines={1}>{item.name}</AppText>
+                  <DrillCard
+                    key={item.drillId}
+                    drill={item}
+                  />
                 </TouchableOpacity>
               )}
             />
           </View>
+          <AppButton title='Add Drills to Workout' onPress={() => setModalVisible(false)}/>
         </Screen>
       </Modal>
     </>
@@ -90,17 +97,6 @@ const styles = StyleSheet.create({
   },
   drills: {
     alignSelf: 'center'
-  },
-  drillChip: {
-    height: 60,
-    width: 150,
-    borderRadius: 20,
-    backgroundColor: colors.grey,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginVertical: 30,
-    marginHorizontal: 15,
-
   },
   drillContainer: {
     marginVertical: 15

@@ -1,17 +1,19 @@
 import * as Yup from 'yup'
 import React, { Fragment, useEffect, useState } from 'react'
-import { StyleSheet, View, Platform, Modal, FlatList } from 'react-native'
+import { StyleSheet, View, Platform, Modal, FlatList, Image } from 'react-native'
 import { Picker } from '@react-native-picker/picker';
 import AppForm from '../../components/forms/Form'
 import Screen from '../../components/Screen'
 import AddDrill from '../../components/AddDrill'
 import { useDispatch, useSelector } from 'react-redux'
 import { getTopicData, setSession, stageSession, getUserDrills, addNewDrill, setTopic, setType } from '../../redux/actions/sessionActions'
-
+import RNPickerSelect from 'react-native-picker-select';
 import colors from '../../config/colors'
 import AppText from '../../components/Text';
 import AppButton from '../../components/Button';
 import routes from '../../navigation/routes';
+import AppFormPicker from '../../components/forms/FormPicker';
+import DrillCard from '../../components/DrillCard';
 
 
 
@@ -24,8 +26,6 @@ export default function SessionScreen({ navigation }) {
   const topics = useSelector(state => state.session.topics)
   const session = useSelector(state => state.session)
   const userHandle = useSelector(state => state.user.credentials.handle)
-  const [selectedTopic, setSelectedTopic] = useState();
-  const [selectedType, setSelectedType] = useState();
   const [currentTopic, setCurrentTopic] = useState()
   const [sessionCreated, setSessionCreated] = useState(false);
   const [sessionStaged, setSessionStaged] = useState(false);
@@ -33,8 +33,8 @@ export default function SessionScreen({ navigation }) {
 
   const handleTopic = (topicName, index) => {
     dispatch(setTopic(topicName))
-    setSelectedTopic(topicName)
     setCurrentTopic(index)
+    console.log(currentTopic);
   };
   const handleType = (typeName) => {
     dispatch(setType(typeName))
@@ -48,39 +48,38 @@ export default function SessionScreen({ navigation }) {
     }))
     navigation.navigate(routes.SESSION_STEP)
   };
-  
+
+  const makeMenuItems = (items, label, value) => {
+    let menuItems = []
+    items.forEach((item, index) => {
+      const menuItem = { 
+        label: label ? item[label] : item, 
+        value: value ? item[value] : item, 
+        key: index 
+      }
+      menuItems.push(menuItem)
+    })
+    return menuItems
+  }
 
   return (
     <Screen>
+
       {topics !== undefined &&
-
-        <Picker
-          selectedValue={selectedTopic}
-          style={Platform.OS === 'android' ? styles.pickerContainer : null}
-          itemStyle={styles.pickerContainer}
-          onValueChange={(value, index) => handleTopic(value, index)}
-        >
-          {topics && topics.map((topic, index) => (
-            <Picker.Item key={index} label={topic.name} value={topic.name} />
-          ))}
-        </Picker>
-
-
+        <RNPickerSelect
+          onValueChange={(value, index) => handleTopic(value, index-1)}
+          items={makeMenuItems(topics, 'name', 'name')}
+          placeholder={{label: 'Choose Your Sport...'}}
+          style={{ ...pickerSelectStyles }}
+        />
       }
-
-      {currentTopic ?
-
-        <Picker
-          selectedValue={selectedType}
-          style={Platform.OS === 'android' ? styles.pickerContainer : null}
-          itemStyle={styles.pickerContainer}
-          onValueChange={(value) => handleType(value)}
-        >
-          {currentTopic && topics[currentTopic].sessionTypes.map((type, index) => (
-            <Picker.Item key={index} label={type} value={type} />
-          ))}
-        </Picker>
-        : null
+      {session.topic !== undefined && currentTopic !== undefined &&
+        <RNPickerSelect
+          onValueChange={(value) => dispatch(setType(value))}
+          items={makeMenuItems(topics[currentTopic].sessionTypes)}
+          placeholder={{label: 'Choose Your Sport...'}}
+          style={{ ...pickerSelectStyles }}
+        />
       }
 
       {session.type !== undefined && session.topic !== undefined &&
@@ -94,9 +93,10 @@ export default function SessionScreen({ navigation }) {
           style={styles.drills}
           keyExtractor={(item, i) => i}
           renderItem={({ item, index }) => (
-            <View style={styles.drillChip}>
-              <AppText numberOfLines={1}>{(index + 1).toString()}. {item.name}</AppText>
-            </View>
+            <DrillCard
+              key={item.drillId}
+              drill={item}
+            />
           )}
         />
       </View>
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   drillChip: {
-    height: 60,
+    height: 100,
     width: 150,
     borderRadius: 20,
     backgroundColor: colors.grey,
@@ -137,5 +137,31 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     marginHorizontal: 15,
 
-  }
+  },
+  drillImage: {
+    height: 100,
+    width: 100
+  },
 })
+
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    fontSize: 16,
+    paddingTop: 13,
+    paddingHorizontal: 10,
+    paddingBottom: 12,
+    width: 200,
+    borderRadius: 25,
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.grey,
+    color: 'black',
+  },
+  placeholder: {
+    color: colors.accent,
+  },
+  viewContainer: {
+    alignSelf: 'center',
+  }
+});

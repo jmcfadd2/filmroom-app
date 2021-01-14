@@ -33,7 +33,8 @@ export default function (state = initialState, action) {
     case SET_COURSES:
       return {
         ...state,
-        courses: action.payload
+        courses: action.payload,
+        loading: false
       }
     case SET_COURSE_INFO:
       return {

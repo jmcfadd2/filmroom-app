@@ -9,9 +9,11 @@ export default Object.freeze({
   LOGIN: "Login",
   REGISTER: "Register",
   WELCOME: "Welcome",
+  SIGN_UP: 'Sign Up',
   SESSION: 'Session',
   SESSION_STEP:'Session Step',
   SESSION_STAGE: 'Session Stage',
+  SESSION_LOADING: 'Session Loading',
   VIEW_IMAGE: 'View Image',
 
 })
