@@ -151,6 +151,7 @@ const pickerSelectStyles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingBottom: 12,
     width: 200,
+    height: 200,
     borderRadius: 25,
     alignSelf: 'center',
     alignItems: 'center',

@@ -10,6 +10,8 @@ import FormImagePicker from '../../components/forms/FormImagePicker';
 import { useDispatch, useSelector } from 'react-redux'
 import { postSession } from '../../redux/actions/sessionActions'
 import routes from '../../navigation/routes'
+import { LOADING_SESSION } from '../../redux/types';
+
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).label('Title'),
@@ -17,10 +19,11 @@ const validationSchema = Yup.object().shape({
   images: Yup.array().min(1, "Please select at least one image")
 })
 
-export default function ListingEditScreen({ navigation }) {
+export default function StageSessionScreen({ navigation }) {
   const dispatch = useDispatch()
   const session = useSelector(state => state.session)
   const userImage = useSelector(state => state.user.credentials.imageUrl)
+  const [uploading, setUploading] = useState(false);
 
   const handleSessionPost = (values) => {
     const sessionPost = {
@@ -36,11 +39,13 @@ export default function ListingEditScreen({ navigation }) {
         sessionId: session.sessionId
       }
     }
-
-    dispatch(postSession(session.sessionId, sessionPost, values.videos, values.images))
+    dispatch(postSession(session.sessionId, sessionPost, values.videos, values.images));
+    navigation.navigate(routes.SESSION_LOADING);
   }
+
   return (
     <Screen>
+      
       <Form
         initialValues={{
           title: "",
@@ -64,7 +69,7 @@ export default function ListingEditScreen({ navigation }) {
         />
         <FormImagePicker name='images' />
         <FormImagePicker name='videos' />
-        <SubmitButton title="Post" />
+        <SubmitButton title="Post"  />
       </Form>
 
     </Screen>
