@@ -17,19 +17,22 @@ export default function ImageInput({ imageUri, onChangeImage, type }) {
 
   const handlePress = () => {
     if (!imageUri) selectImage()
-    else Alert.alert('Delete', 'Are you sure you want to delete this image?',
+    else Alert.alert(
+      'Delete',
+      'Are you sure you want to delete this image?',
       [{ text: 'Yes', onPress: () => onChangeImage(null) },
       { text: 'No' },
       ])
   }
   const selectImage = async () => {
     try {
-      
+
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: type == 'images' ? ImagePicker.MediaTypeOptions.Images : ImagePicker.MediaTypeOptions.Videos,
         quality: 0.5
       })
-      if (!result.cancelled) {onChangeImage(result.uri) 
+      if (!result.cancelled) {
+        onChangeImage(result.uri)
       }
     } catch (error) {
       console.log("Error reading image")
@@ -39,15 +42,15 @@ export default function ImageInput({ imageUri, onChangeImage, type }) {
     <TouchableWithoutFeedback onPress={handlePress}>
       <View style={styles.container}>
         {!imageUri && <MaterialCommunityIcons name={type == 'images' ? "camera" : 'video'} color='grey' size={50} />}
-        {imageUri && type == 'images' ?  
-        <Image source={{ uri: imageUri }} style={styles.image} /> :
-        <Video 
-          source={{ uri: imageUri }}
-          style={imageUri && styles.image}
-          useNativeControls
-          
-        />
-      }
+        {imageUri && type == 'images' ?
+          <Image source={{ uri: imageUri }} style={styles.image} /> :
+          <Video
+            source={{ uri: imageUri }}
+            style={imageUri && styles.image}
+            useNativeControls
+
+          />
+        }
       </View>
     </TouchableWithoutFeedback>
   )

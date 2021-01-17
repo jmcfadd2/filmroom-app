@@ -2,6 +2,7 @@ import {
   SET_USER,
   SET_UNAUTHENTICATED,
   LOADING_USER,
+  STOP_LOADING_USER,
   LIKE_POST,
   UNLIKE_POST,
   SET_AUTHENTICATED,
@@ -30,6 +31,7 @@ export default function (state = initialState, action) {
       return initialState
     case SET_USER:
       return {
+        
         authenticated: true,
         ...action.payload
       }
@@ -37,6 +39,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: true
+      }
+    case STOP_LOADING_USER:
+      return {
+        ...state,
+        loading: false
       }
     case LIKE_POST:
       return {
@@ -61,12 +68,7 @@ export default function (state = initialState, action) {
       return {
         ...state
       };
-    case SET_USER_POSTS:
-      return {
-        ...state,
-        userPosts: action.payload,
-        loading: false
-      };
+    
     default:
       return state
   }

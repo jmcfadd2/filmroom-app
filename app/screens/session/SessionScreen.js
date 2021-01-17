@@ -77,7 +77,7 @@ export default function SessionScreen({ navigation }) {
         <RNPickerSelect
           onValueChange={(value) => dispatch(setType(value))}
           items={makeMenuItems(topics[currentTopic].sessionTypes)}
-          placeholder={{label: 'Choose Your Sport...'}}
+          placeholder={{label: 'What type of Session...?'}}
           style={{ ...pickerSelectStyles }}
         />
       }
@@ -148,10 +148,11 @@ const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
     fontSize: 16,
     paddingTop: 13,
-    paddingHorizontal: 10,
+    paddingHorizontal: 60,
     paddingBottom: 12,
-    width: 200,
-    height: 200,
+    marginVertical: 20,
+    width: 300,
+    height: 50,
     borderRadius: 25,
     alignSelf: 'center',
     alignItems: 'center',
@@ -164,5 +165,6 @@ const pickerSelectStyles = StyleSheet.create({
   },
   viewContainer: {
     alignSelf: 'center',
+    
   }
 });

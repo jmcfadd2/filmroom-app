@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux';
 import { getPosts } from '../redux/actions/dataActions';
 import PostCard from '../components/PostCard'
@@ -25,8 +25,15 @@ export default function FeedsScreen({ navigation }) {
     <Screen style={styles.screen}>
       {!loading ? (<FlatList
         data={posts}
-        onRefresh={onRefresh}
-        refreshing={isRefreshing}
+        refreshControl={
+          <RefreshControl
+            colors={['gray', 'white']}
+            onRefresh={onRefresh}
+            refreshing={isRefreshing}
+            title="Pull to refresh"
+            tintColor="#fff"
+            titleColor={colors.accent}
+          />}
         keyExtractor={post => post.postId}
         renderItem={({item, index}) =>
         <PostCard

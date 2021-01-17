@@ -42,9 +42,9 @@ export const getPosts = () => (dispatch) => {
     });
 };
 
-export const getUserData = (userHandle) => (dispatch) => {
+export const getUserPosts = (userHandle) => (dispatch) => {
   dispatch({
-    type: LOADING_USER
+    type: LOADING_DATA
   });
   axios
     .get(`/user/${userHandle}`)
@@ -54,11 +54,8 @@ export const getUserData = (userHandle) => (dispatch) => {
         payload: res.data.posts
       });
     })
-    .catch(() => {
-      dispatch({
-        type: SET_POSTS,
-        payload: null
-      });
+    .catch((err) => {
+      console.log(err);
     });
 };
 

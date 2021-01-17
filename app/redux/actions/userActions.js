@@ -5,7 +5,8 @@ import {
   LOADING_UI,
   SET_UNAUTHENTICATED,
   LOADING_USER,
-  MARK_NOTIFICATIONS_READ
+  MARK_NOTIFICATIONS_READ,
+  STOP_LOADING_USER
 } from '../types';
 import axios from 'axios';
 import { firebase } from '../../config/firebase'
@@ -15,15 +16,15 @@ export const loginUser = (userData) => (dispatch) => {
   dispatch({
     type: LOADING_UI
   })
-  
+
   axios.post('/login', userData)
     .then((res) => {
       setAuthorizationHeader(res.data.token)
       dispatch(getUserData())
       dispatch({ type: CLEAR_ERRORS })
-      firebase.default.auth().signInWithEmailAndPassword(userData.email,userData.password)
+      firebase.default.auth().signInWithEmailAndPassword(userData.email, userData.password)
       console.log(res.data.token);
-      
+
     })
     .catch((err) => {
       dispatch({
@@ -103,6 +104,35 @@ export const editUserDetails = (userDetails) => (dispatch) => {
     })
     .catch((err) => console.log(err));
 };
+
+export const editUserImage =  (userImage, handle) => async (dispatch) => {
+  dispatch({
+    type: LOADING_USER
+  })
+  const response = await fetch(userImage);
+  const blob = await response.blob();
+  let name = new Date().getTime() + "-image.jpg"
+  await firebase.storage().ref('profile-pics')
+    .child(name)
+    .put(blob)
+    .then(() => {
+
+      console.log(`Uploaded file: ${name}`)
+      firebase.storage().ref('profile-pics')
+        .child(name).getDownloadURL().then((url) => {
+          firebase.firestore()
+            .collection('users')
+            .doc(handle)
+            .update({imageUrl: url})
+        })
+    })
+    .then(() => {
+      dispatch(getUserData())
+    })
+    dispatch({
+      type: STOP_LOADING_USER
+    })
+}
 
 export const markNotificationsRead = (notificationIds) => (dispatch) => {
   axios

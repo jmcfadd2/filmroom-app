@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AccountScreen from '../screens/AccountScreen';
 import ListingEditScreen from '../screens/CreatePostScreen';
 import FeedsScreen from '../screens/FeedsScreen';
-import { MaterialCommunityIcons, Foundation  } from '@expo/vector-icons';
+import { MaterialCommunityIcons, Foundation } from '@expo/vector-icons';
 import FeedNavigator from './FeedNavigator';
 import routes from './routes';
 import LearnNavigator from './LearnNavigator';
@@ -16,22 +16,24 @@ import colors from '../config/colors';
 const Tab = createBottomTabNavigator()
 
 const AppNavigator = () => (
-  <Tab.Navigator 
-  screenOptions={{
-    headerShown: false
-  }}
-  tabBarOptions={{
-    activeTintColor: colors.accent,
-    activeBackgroundColor: colors.secondary,
-    inactiveTintColor: 'grey',
-    inactiveBackgroundColor: colors.secondary,
-    
-    style: {
-      backgroundColor: colors.secondary,
-      borderTopWidth: 0,
+  <Tab.Navigator
+    screenOptions={{
+      headerShown: false
+    }}
+    tabBarOptions={{
+      activeTintColor: colors.accent,
+      activeBackgroundColor: colors.secondary,
+      inactiveTintColor: 'grey',
+      inactiveBackgroundColor: colors.secondary,
       
-    }
-  }}>
+      style: {
+        backgroundColor: colors.secondary,
+        borderTopWidth: 0,
+
+      }
+    }}
+    
+  >
     <Tab.Screen
       name={routes.FEEDS}
       component={FeedNavigator}

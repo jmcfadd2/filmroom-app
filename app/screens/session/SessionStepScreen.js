@@ -72,6 +72,7 @@ export default function SessionStepScreen({ navigation }) {
                           keyboardType='number-pad'
                           fontSize={60}
                           onChangeText={(text) => handleFirstCompoundMetric(text)}
+                          value={results.compoundMetric !== undefined && results.compoundMetric[0]}
                         />
                       </View>
                       <AppText style={styles.operation}>{metric.split(/(\sx\s|\/)/)[1]}</AppText>
@@ -82,7 +83,7 @@ export default function SessionStepScreen({ navigation }) {
                           keyboardType='number-pad'
                           fontSize={60}
                           onChangeText={(text) => handleSecondCompoundMetric(text)}
-
+                          value={results.compoundMetric !== undefined && results.compoundMetric[1]}
                         />
                       </View>
                     </View>

@@ -33,11 +33,11 @@ export default function SignUpScreen({ navigation }) {
       />
 
       <Form
-        initialValues={{handle: '', email: '', password: '', confirmPassword: '' }}
+        initialValues={{ handle: '', email: '', password: '', confirmPassword: '' }}
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
-        {serverErrors !== undefined && 
+        {serverErrors !== undefined &&
           <AppText>{serverErrors}</AppText>
         }
         <AppFormField
@@ -46,7 +46,7 @@ export default function SignUpScreen({ navigation }) {
           icon="account"
           name="handle"
           placeholder="Username"
-          
+
         />
         <AppFormField
           autoCorrect={false}
@@ -78,7 +78,12 @@ export default function SignUpScreen({ navigation }) {
         <SubmitButton title="Sign Up" loading={loginLoading} />
       </Form>
 
-      <AppButton title='Login Here' onPress={() => navigation.navigate(routes.LOGIN)} />
+      <AppText
+        onPress={() => navigation.navigate(routes.SIGN_UP)}
+        style={styles.clickHere}
+      >
+        Don't have an account? Tap here
+      </AppText>
 
 
 
@@ -96,5 +101,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 50,
     marginBottom: 20
+  },
+  clickHere: {
+    alignSelf: 'center'
   }
 })

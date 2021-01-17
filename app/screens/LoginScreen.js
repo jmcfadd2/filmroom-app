@@ -54,7 +54,12 @@ export default function LoginScreen({ navigation }) {
         <SubmitButton title="Login" loading={loginLoading} />
       </Form>
 
-      <AppButton title='Sign up here' onPress={() => navigation.navigate(routes.SIGN_UP)} />
+      <AppText 
+      onPress={() => navigation.navigate(routes.SIGN_UP)}
+      style={styles.clickHere}
+      >
+        Don't have an account? Tap here
+      </AppText>
 
     </Screen>
   )
@@ -70,5 +75,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 50,
     marginBottom: 20
+  },
+  clickHere: {
+    alignSelf: 'center'
   }
 })

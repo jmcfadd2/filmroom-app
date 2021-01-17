@@ -9,6 +9,7 @@ import {
   SET_POST,
   SUBMIT_COMMENT,
   INCREMENT_LIKE,
+  SET_USER_POSTS,
   SET_TOPIC,
   SET_TYPE,
   SET_SESSION,
@@ -46,6 +47,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         post: action.payload
+      };
+    case SET_USER_POSTS:
+      return {
+        ...state,
+        userPosts: action.payload,
+        loading: false
       };
     case LIKE_POST:
     case UNLIKE_POST:

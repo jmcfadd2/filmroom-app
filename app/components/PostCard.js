@@ -1,6 +1,6 @@
 import { Video } from 'expo-av'
 import React from 'react'
-import { Image, ImageBackground, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
+import { Alert, Image, ImageBackground, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import dayjs from 'dayjs';
 import { FlatList } from 'react-native-gesture-handler'
@@ -17,6 +17,12 @@ export default function Card({ post, style, index, cardOnPress, navigation }) {
   const compMetric = session.drillResults.compoundMetric
   const likeCount = useSelector(state => state.data.posts[index].likeCount)
   const commentCount = useSelector(state => state.data.posts[index].commentCount)
+  const showAlert = () => {
+    Alert.alert(
+      'Excuse our growing pains',
+      'This action is not availble yet'
+      )
+  }
   return (
 
 
@@ -36,27 +42,29 @@ export default function Card({ post, style, index, cardOnPress, navigation }) {
       </View>
       <View style={styles.sessionContainer}>
         <AppText style={styles.topic}>{session.topic} Session</AppText>
-        {session &&
-          session.drillResults.map((result, index) => (
-            <View style={styles.drill} key={index}>
-              <AppText color={colors.white}>{result.drillName}</AppText>
-              {!result.results.compoundMetric ?
-                result.results.map((metric, index) => (
-                  <View key={index}>
-                    <AppText color={colors.white}>{metric}</AppText>
-                  </View>
-                )) : (
-                  <View style={styles.compoundMetric}>
-                    <AppText style={styles.firstMetric}>
-                      {result.results.compoundMetric[0]}/{result.results.compoundMetric[1]}
-                    </AppText>
-                    <AppText>
-                      {(result.results.compoundMetric[0] / result.results.compoundMetric[1] * 100).toPrecision(3)}%
+        <View style={styles.drillContainer}>
+          {session &&
+            session.drillResults.map((result, index) => (
+              <View style={styles.drill} key={index}>
+                <AppText color={colors.white}>{result.drillName}</AppText>
+                {!result.results.compoundMetric ?
+                  result.results.map((metric, index) => (
+                    <View key={index}>
+                      <AppText color={colors.white}>{metric}</AppText>
+                    </View>
+                  )) : (
+                    <View style={styles.compoundMetric}>
+                      <AppText style={styles.firstMetric}>
+                        {result.results.compoundMetric[0]}/{result.results.compoundMetric[1]}
                       </AppText>
-                  </View>
-                )}
-            </View>
-          ))}
+                      <AppText>
+                        {(result.results.compoundMetric[0] / result.results.compoundMetric[1] * 100).toPrecision(3)}%
+                        </AppText>
+                    </View>
+                  )}
+              </View>
+            ))}
+        </View>
       </View>
       <View style={styles.videos}>
 
@@ -66,7 +74,7 @@ export default function Card({ post, style, index, cardOnPress, navigation }) {
             data={post.videos}
             keyExtractor={(item, index) => 'key' + index}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => navigation.navigate(routes.VIEW_IMAGE, {video: item})}>
+              <TouchableOpacity onPress={() => navigation.navigate(routes.VIEW_IMAGE, { video: item })}>
                 <ImageBackground
                   source={{ uri: `https://image.mux.com/${item}/thumbnail.png?width=428&start=3.0864165` }}
                   style={styles.videoThumb}
@@ -88,7 +96,7 @@ export default function Card({ post, style, index, cardOnPress, navigation }) {
           data={post.images}
           keyExtractor={(item, index) => 'key' + index}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => navigation.navigate(routes.VIEW_IMAGE, {image: item})}>
+            <TouchableOpacity onPress={() => navigation.navigate(routes.VIEW_IMAGE, { image: item })}>
               <Image
                 source={{ uri: item }}
                 style={{ width: 100, height: 100 }}
@@ -118,7 +126,7 @@ export default function Card({ post, style, index, cardOnPress, navigation }) {
 
         </View>
         <View style={styles.actionContainer}>
-          <MaterialIcons name='chat' size={28} color={colors.accent} />
+          <MaterialIcons onPress={showAlert} name='chat' size={28} color={colors.accent} />
         </View>
       </View>
     </View>
@@ -181,22 +189,29 @@ const styles = StyleSheet.create({
     color: colors.white
   },
   topic: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    alignSelf: 'center'
   },
   sessionContainer: {
     marginRight: 'auto',
     marginLeft: 'auto',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    padding: 20,
+    width: '100%'
+  },
+  drillContainer: {
+    flexDirection: 'row'
   },
   drill: {
-    alignSelf: 'center'
+    alignSelf: 'center',
+    marginRight: 15,
   },
   compoundMetric: {
     flexDirection: 'row',
-    width: '35%'
+    
   },
   firstMetric: {
-    marginRight: 8
+    paddingRight: 8
   },
   likeBar: {
     flexDirection: 'row',

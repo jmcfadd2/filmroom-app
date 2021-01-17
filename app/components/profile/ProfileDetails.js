@@ -3,13 +3,50 @@ import { Image, StyleSheet, Text, View } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons';
 import colors from '../../config/colors'
 import AppText from '../Text'
+import * as ImagePicker from 'expo-image-picker'
+import routes from '../../navigation/routes';
+import { useDispatch, useSelector } from 'react-redux';
+import { editUserImage, getUserData } from '../../redux/actions/userActions';
 
-export default function ProfileDetails({ user }) {
+export default function ProfileDetails({ user, navigation }) {
+  const dispatch = useDispatch()
+  const handle = useSelector(state => state.user.credentials.handle)
+  const imageUrl = useSelector(state => state.user.credentials.imageUrl)
+  const requestPermission = async () => {
+    const { granted } = await ImagePicker.requestCameraRollPermissionsAsync()
+    if (!granted) alert("You need to give access")
+    
+  }
+
+  const selectImage = async () => {
+    try {
+
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        quality: 0.7
+      })
+      if (!result.cancelled) {
+        await dispatch(editUserImage(result.uri, handle))
+      }
+    } catch (error) {
+      console.log("Error reading image")
+    }
+  }
+  const handleEditImage = async () => {
+    requestPermission()
+    await selectImage()
+  }
   return (
     <View style={styles.profileContainer}>
       <Image
-        source={{ uri: user.imageUrl }}
+        source={{ uri: imageUrl }}
         style={styles.userImage}
+      />
+      <MaterialIcons
+        style={styles.editImage}
+        name='add-circle' size={28}
+        color={colors.accent}
+        onPress={handleEditImage}
       />
       <AppText style={styles.handle}>{user.handle}</AppText>
       <View style={styles.attributeContainer}>
@@ -35,18 +72,18 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: colors.primary,
     borderRadius: 20,
-    marginVertical: 20
+    marginTop: 20
   },
   userImage: {
     height: 100,
     width: 100,
     borderRadius: 50,
+    marginBottom: 10,
     alignSelf: 'center',
 
   },
   handle: {
-    fontSize: 30
-    ,
+    fontSize: 30,
     fontWeight: 'bold',
     alignSelf: 'center'
   },
@@ -55,5 +92,11 @@ const styles = StyleSheet.create({
   },
   attributeContainer: {
     alignSelf: 'center'
+  },
+  editImage: {
+    alignSelf: 'center',
+    position: 'absolute',
+    top: 100,
+    right: 140
   }
 })
