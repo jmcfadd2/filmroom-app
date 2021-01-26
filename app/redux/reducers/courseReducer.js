@@ -9,6 +9,7 @@ import {
   LOADING_UI,
   SET_UPLOAD_SUCCESS,
   LOADING_COURSES,
+  STOP_LOADING_COURSES,
   STOP_LOADING_UI,
   SET_COURSES,
   SET_COURSE_INFO
@@ -29,6 +30,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: true
+      }
+    case STOP_LOADING_COURSES:
+      return {
+        ...state,
+        loading: false
       }
     case SET_COURSES:
       return {

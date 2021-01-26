@@ -79,10 +79,10 @@ export default function SignUpScreen({ navigation }) {
       </Form>
 
       <AppText
-        onPress={() => navigation.navigate(routes.SIGN_UP)}
+        onPress={() => navigation.navigate(routes.LOGIN)}
         style={styles.clickHere}
       >
-        Don't have an account? Tap here
+        Have an account already? Tap here
       </AppText>
 
 

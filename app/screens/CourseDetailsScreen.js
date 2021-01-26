@@ -8,13 +8,20 @@ import { Entypo } from '@expo/vector-icons';
 import AppButton from '../components/Button';
 import VideoListItem from '../components/VideoListItem';
 import colors from '../config/colors';
+import { addCourseToLibrary } from '../redux/actions/courseActions';
+import { useDispatch } from 'react-redux';
 
 
 export default function CourseDetailsScreen({ navigation, route }) {
+  const dispatch = useDispatch()
   const course = route.params
   const [activeVideo, setActiveVideo] = useState(course.previewVideo)
+  const handleAddCourse = () => {
+    dispatch(addCourseToLibrary(course))
+  }
   return (
     <View style={styles.detailsScreen}>
+      {console.log(course.drillInfo)}
       <Video
         source={{ uri: `https://stream.mux.com/${activeVideo}.m3u8`, overrideFileExtensionAndroid: 'm3u8' }}
         resizeMode='cover'
@@ -31,7 +38,7 @@ export default function CourseDetailsScreen({ navigation, route }) {
           </View>
         </View>
         <View style={styles.addButton}>
-          <AppButton title='Add To Library' />
+          <AppButton title='Add To Library' onPress={handleAddCourse} />
         </View>
         <View style={styles.videoList}>
           <FlatList

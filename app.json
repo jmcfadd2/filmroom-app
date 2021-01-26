@@ -17,7 +17,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.jmcfadd2.reppit-app"
     },
     "android": {
       "adaptiveIcon": {

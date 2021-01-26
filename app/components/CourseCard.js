@@ -6,27 +6,31 @@ import { Entypo } from '@expo/vector-icons';
 import colors from '../config/colors';
 
 export default function CourseCard({ course, style, onPress }) {
-
+  const noImage = require('../assets/no-img.png')
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.courseCard}>
         <Image
-          source={{ uri: course.image }}
+          source={{ uri: course.image || `https://image.mux.com/${course.previewVideo}/thumbnail.png?width=428&start=3.0864165` }}
           style={{ width: '100%', height: 150 }}
         />
         <View style={styles.instructorContainer}>
           <Image
-            source={require('../assets/prof-pic-1.jpg')}
+
+            source={course.instructorImage ? 
+              { uri: course.instructorImage }
+              : require('../assets/no-img.png')
+            }
             style={styles.avatar}
           />
           <View style={styles.nametag}>
-            <AppText style={styles.name}>{course.userHandle}</AppText>
+            <AppText style={styles.name}>{course.name || course.userHandle}</AppText>
             <AppText
               numberOfLines={1}
               ellipsizeMode='tail'
               style={styles.subtitle}
             >
-              Filmroom Coach
+              FilmRoom Coach
         </AppText>
           </View>
         </View>

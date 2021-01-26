@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, Modal, TouchableOpacity, FlatList, Button } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
 import { useDispatch, useSelector } from 'react-redux'
 
 import colors from '../config/colors'
@@ -34,43 +35,48 @@ export default function AddDrill({ onPress, items }) {
       <Modal visible={modalVisible} animationType="slide">
 
         <Screen>
-          <Button title='cancel' onPress={() => {setModalVisible(false)}} />
-          <View style={styles.drillContainer}>
-            <AppText>Selected Drills</AppText>
-            <FlatList
-              horizontal
-              data={sessionDrills}
-              style={styles.drills}
-              keyExtractor={(item, i) => i}
-              renderItem={({ item, index }) => (
-                <DrillCard 
-                  key={item.drillId}
-                  drill={item}
-                />
-              )}
-            />
-          </View>
-          <View style={styles.drillContainer}>
-            <AppText>Add Your Drills</AppText>
-            <FlatList
-              data={userDrills}
-              style={styles.drills}
-              keyExtractor={(item, i) => i}
-              numColumns={2}
-              renderItem={({ item, index }) => (
-                <TouchableOpacity
-                  style={styles.drillChip}
-                  onPress={() => dispatch(addDrillToSession(item.name))}
-                >
-                  <DrillCard
+          <ScrollView>
+            <Button title='cancel' onPress={() => {setModalVisible(false)}} />
+            <View style={styles.drillContainer}>
+              <AppText>Selected Drills</AppText>
+              <FlatList
+                horizontal
+                data={sessionDrills}
+                style={styles.drills}
+                keyExtractor={(item, i) => i}
+                renderItem={({ item, index }) => (
+                  <DrillCard 
                     key={item.drillId}
                     drill={item}
                   />
-                </TouchableOpacity>
-              )}
-            />
-          </View>
-          <AppButton title='Add Drills to Workout' onPress={() => setModalVisible(false)}/>
+                )}
+              />
+            </View>
+            <View style={styles.drillContainer}>
+              <AppText>Add Your Drills</AppText>
+              <ScrollView>
+                <FlatList
+                  data={userDrills}
+                  style={styles.drills}
+                  keyExtractor={(item, i) => i}
+                  numColumns={2}
+                  nestedScrollEnabled
+                  renderItem={({ item, index }) => (
+                    <TouchableOpacity
+                      style={styles.drillChip}
+                      onPress={() => dispatch(addDrillToSession(item.name))}
+                    >
+                      <DrillCard
+                        key={item.drillId}
+                        drill={item}
+                      />
+                    </TouchableOpacity>
+                  )}
+                />
+              </ScrollView>
+            </View>
+          </ScrollView>
+          <AppButton style={styles.addButton} title='Add Drills to Workout' onPress={() => setModalVisible(false)}/>
         </Screen>
       </Modal>
     </>
@@ -101,4 +107,12 @@ const styles = StyleSheet.create({
   drillContainer: {
     marginVertical: 15
   },
+  addButton: {
+    alignSelf: 'flex-end',
+    position: 'relative',
+    bottom: 70,
+    width: 300,
+    marginLeft: 'auto',
+    marginRight: 'auto'
+  }
 })

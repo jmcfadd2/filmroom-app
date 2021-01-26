@@ -8,6 +8,7 @@ import {
   LOADING_UI,
   SET_UPLOAD_SUCCESS,
   LOADING_COURSES,
+  STOP_LOADING_COURSES,
   STOP_LOADING_UI,
   SET_COURSES,
   SET_COURSE_INFO
@@ -56,3 +57,28 @@ export const getCourseData = (courseId) => (dispatch) => {
       });
     });
 };
+
+export const addCourseToLibrary = (courseInfo) => (dispatch) => {
+  dispatch({
+    type: LOADING_COURSES
+  })
+  const newRequest = {
+    drillInfo: courseInfo.drillInfo,
+    drillVideos: courseInfo.drillVideos,
+    instructor: courseInfo.userHandle,
+    courseId: courseInfo.courseId,
+
+  }
+  console.log(newRequest)
+  axios
+    .post('/courses/add', newRequest)
+    .then((res) => {
+      console.log(res);
+      dispatch({
+        type: STOP_LOADING_COURSES
+      })
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+}
