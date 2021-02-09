@@ -16,7 +16,7 @@ import { LOADING_SESSION } from '../../redux/types';
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).label('Title'),
   description: Yup.string().label('Description'),
-  images: Yup.array().min(1, "Please select at least one image")
+  
 })
 
 export default function StageSessionScreen({ navigation }) {
@@ -28,7 +28,7 @@ export default function StageSessionScreen({ navigation }) {
   const handleSessionPost = (values) => {
     const sessionPost = {
       title: values.title,
-      description: values.title,
+      description: values.description,
       userImage: userImage,
       videoCount: values.videos.length,
       session: {
