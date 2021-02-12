@@ -12,8 +12,7 @@ export default function DrillCard({ drill }) {
         style={styles.image}
       />
       <AppText style={styles.drillInfo}>{drill.name}</AppText>
-      <AppText style={styles.drillInfo}>Metric:
-       {drill.metrics[0]}</AppText>
+      
       
     </View>
   )
