@@ -1,4 +1,4 @@
-![Example screenshot](./app/assets/Filmroom-logo2.png)
+![App Logo](./app/assets/Filmroom-logo2.png)
 
 
 
@@ -21,7 +21,7 @@ As an avid user of Strava, which tracks runs and Udemy, which provides online co
 
 
 ## Technologies
-* React - Material UI
+* React Native - Expo
 * Redux - Redux Thunk
 * Firebase - Node.js (Firebase Functions)
 
